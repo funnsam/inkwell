@@ -5,8 +5,8 @@ use std::fmt::Debug;
 use crate::support::LLVMString;
 use crate::types::enums::{AnyTypeEnum, BasicMetadataTypeEnum, BasicTypeEnum};
 use crate::types::{
-    ArrayType, FloatType, FunctionType, IntType, PointerType, ScalableVectorType, StructType, Type, VectorType,
-    VoidType,
+    ArraySize, ArrayType, FloatType, FunctionType, IntType, PointerType, ScalableVectorType, StructType, Type,
+    VectorType, VoidType,
 };
 use crate::values::{
     FloatMathValue, FloatValue, IntMathValue, IntValue, PointerMathValue, PointerValue, ScalableVectorValue,
@@ -114,7 +114,7 @@ pub unsafe trait BasicType<'ctx>: AnyType<'ctx> {
     /// assert_eq!(int_basic_type.array_type(32), int.array_type(32));
     /// ```
     // FIXME: This likely doesn't belong on the trait, since not all basic types can be turned into arrays?
-    fn array_type(&self, size: u32) -> ArrayType<'ctx> {
+    fn array_type(&self, size: ArraySize) -> ArrayType<'ctx> {
         unsafe { Type::new(self.as_type_ref()).array_type(size) }
     }
 

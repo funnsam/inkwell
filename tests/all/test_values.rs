@@ -1195,7 +1195,7 @@ fn test_global_byte_array() {
     let module = context.create_module("my_mod");
     let my_str = "Hello, World";
     let i8_type = context.i8_type();
-    let i8_array_type = i8_type.array_type(my_str.len() as u32);
+    let i8_array_type = i8_type.array_type(my_str.len() as _);
     let global_string = module.add_global(i8_array_type, Some(AddressSpace::default()), "message");
 
     let mut chars = Vec::with_capacity(my_str.len());

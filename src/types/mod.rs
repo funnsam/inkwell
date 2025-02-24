@@ -38,14 +38,17 @@ pub use crate::types::traits::{AnyType, AsTypeRef, BasicType, FloatMathType, Int
 pub use crate::types::vec_type::VectorType;
 pub use crate::types::void_type::VoidType;
 
+#[llvm_versions(..17)]
+use llvm_sys::core::LLVMArrayType;
+#[llvm_versions(17..)]
+use llvm_sys::core::LLVMArrayType2;
+
 #[llvm_versions(12..)]
 use llvm_sys::core::LLVMScalableVectorType;
 
 #[llvm_versions(12..)]
 use llvm_sys::core::LLVMGetPoison;
 
-#[allow(deprecated)]
-use llvm_sys::core::LLVMArrayType;
 use llvm_sys::core::{
     LLVMAlignOf, LLVMConstNull, LLVMConstPointerNull, LLVMFunctionType, LLVMGetElementType, LLVMGetTypeContext,
     LLVMGetTypeKind, LLVMGetUndef, LLVMPointerType, LLVMPrintTypeToString, LLVMSizeOf, LLVMTypeIsSized, LLVMVectorType,
@@ -62,6 +65,14 @@ use crate::context::ContextRef;
 use crate::support::LLVMString;
 use crate::values::IntValue;
 use crate::AddressSpace;
+
+/// The type of [`array_type`](BasicType::array_type) for the size.
+#[llvm_versions(..17)]
+pub type ArraySize = u32;
+
+/// The type of [`array_type`](BasicType::array_type) for the size.
+#[llvm_versions(17..)]
+pub type ArraySize = u64;
 
 // Worth noting that types seem to be singletons. At the very least, primitives are.
 // Though this is likely only true per thread since LLVM claims to not be very thread-safe.
@@ -145,9 +156,14 @@ impl<'ctx> Type<'ctx> {
         }
     }
 
-    #[allow(deprecated)]
+    #[llvm_versions(..17)]
     fn array_type(self, size: u32) -> ArrayType<'ctx> {
         unsafe { ArrayType::new(LLVMArrayType(self.ty, size)) }
+    }
+
+    #[llvm_versions(17..)]
+    fn array_type(self, size: u64) -> ArrayType<'ctx> {
+        unsafe { ArrayType::new(LLVMArrayType2(self.ty, size)) }
     }
 
     fn get_undef(self) -> LLVMValueRef {

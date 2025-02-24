@@ -4,7 +4,7 @@ use llvm_sys::prelude::LLVMTypeRef;
 use crate::context::ContextRef;
 use crate::support::LLVMString;
 use crate::types::enums::BasicMetadataTypeEnum;
-use crate::types::{traits::AsTypeRef, ArrayType, BasicTypeEnum, FunctionType, PointerType, Type};
+use crate::types::{traits::AsTypeRef, ArraySize, ArrayType, BasicTypeEnum, FunctionType, PointerType, Type};
 use crate::values::{ArrayValue, IntValue, ScalableVectorValue};
 use crate::AddressSpace;
 
@@ -233,7 +233,7 @@ impl<'ctx> ScalableVectorType<'ctx> {
     /// assert_eq!(f32_scalable_vec_array_type.len(), 3);
     /// assert_eq!(f32_scalable_vec_array_type.get_element_type().into_scalable_vector_type(), f32_scalable_vec_type);
     /// ```
-    pub fn array_type(self, size: u32) -> ArrayType<'ctx> {
+    pub fn array_type(self, size: ArraySize) -> ArrayType<'ctx> {
         self.scalable_vec_type.array_type(size)
     }
 

@@ -6,7 +6,7 @@ use crate::context::ContextRef;
 use crate::support::LLVMString;
 use crate::types::enums::BasicMetadataTypeEnum;
 use crate::types::traits::AsTypeRef;
-use crate::types::{ArrayType, FunctionType, PointerType, ScalableVectorType, Type, VectorType};
+use crate::types::{ArraySize, ArrayType, FunctionType, PointerType, ScalableVectorType, Type, VectorType};
 use crate::values::{ArrayValue, FloatValue, GenericValue, IntValue};
 use crate::AddressSpace;
 
@@ -60,7 +60,7 @@ impl<'ctx> FloatType<'ctx> {
     /// assert_eq!(f32_array_type.len(), 3);
     /// assert_eq!(f32_array_type.get_element_type().into_float_type(), f32_type);
     /// ```
-    pub fn array_type(self, size: u32) -> ArrayType<'ctx> {
+    pub fn array_type(self, size: ArraySize) -> ArrayType<'ctx> {
         self.float_type.array_type(size)
     }
 

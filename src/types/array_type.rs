@@ -6,7 +6,7 @@ use crate::context::ContextRef;
 use crate::support::LLVMString;
 use crate::types::enums::BasicMetadataTypeEnum;
 use crate::types::traits::AsTypeRef;
-use crate::types::{BasicTypeEnum, FunctionType, PointerType, Type};
+use crate::types::{ArraySize, BasicTypeEnum, FunctionType, PointerType, Type};
 use crate::values::{ArrayValue, IntValue};
 use crate::AddressSpace;
 
@@ -155,7 +155,7 @@ impl<'ctx> ArrayType<'ctx> {
     /// assert_eq!(i8_array_array_type.len(), 3);
     /// assert_eq!(i8_array_array_type.get_element_type().into_array_type(), i8_array_type);
     /// ```
-    pub fn array_type(self, size: u32) -> ArrayType<'ctx> {
+    pub fn array_type(self, size: ArraySize) -> ArrayType<'ctx> {
         self.array_type.array_type(size)
     }
 

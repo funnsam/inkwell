@@ -6,11 +6,11 @@
 //! This example is supposed to be ran as a executable, which launches a REPL.
 //! The source code is in the following order:
 //! - `implementation_typed_pointers.rs`:
-//!     Lexer,
-//!     Parser,
-//!     Compiler.
+//!     - Lexer,
+//!     - Parser,
+//!     - Compiler.
 //! - `main.rs`:
-//!     Program.
+//!     - Program.
 //!
 //! Both the `Parser` and the `Compiler` may fail, in which case they would return
 //! an error represented by `Result<T, &'static str>`, for easier error reporting.
